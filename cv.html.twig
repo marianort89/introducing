@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.2/base.min.css" integrity="sha512-Pf6FT8Bk6JPIDNqg5ASpHs+Vx5hQyg0RdDU7uwlBa/X+sT4oC2/OBN78/o2OFI/nilyF2V3bpLSqsOO5Ne/Nng==" crossorigin="anonymous" referrerpolicy="no-referrer" media="screen,print" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.2/utilities.min.css" integrity="sha512-NrQ4Uz/HpYtzXuDDl8xVLXOkYe18AzMcEYI96vQBJ/BTniQJAEWPn9tmzMwgBfUdANlpzB0J5+sTLeQ6jmY4bg==" crossorigin="anonymous" referrerpolicy="no-referrer" media="screen,print" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@200;300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://use.fontawesome.com/d067884b59.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    @media screen,
+    print {
+      :root {
+        --font-color: rgb(165, 25, 184);
+        --sidebar-bg-color: rgb(217, 180, 219);
+        --resume-bg-color: white;
+        --border-width: 0.2rem;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Spectral SC", serif;
+      }
+
+      .my-summary {
+        background-color: var(--sidebar-bg-color, lightgrey);
+      }
+
+      .my-summary__paragraph,
+      .my-summary__list-item,
+      .resume__article,
+      .my-summary__photo--private {
+        font-family: "Roboto Condensed", sans-serif;
+        text-align: justify;
+      }
+
+      .my-summary__title {
+        position: relative;
+        font-size: 26px;
+        line-height: 3rem;
+      }
+
+      .my-summary__title::after {
+        content: "";
+        position: absolute;
+        background: var(--font-color, darkgrey);
+        width: 80%;
+        height: var(--border-width, 0.2rem);
+        right: 0;
+        bottom: 0;
+      }
+
+      .my-summary__photo, .my-summary__photo--private {
+        position: relative;
+        border-color: var(--font-color, darkgrey);
+        width: 200px;
+        height: 200px;
+      }
+
+      .my-summary__photo img, .my-summary__photo--private img {
+        width: 200px;
+      }
+
+      .my-summary__photo-private-layer {
+        display: none;
+      }
+
+      .my-summary__photo--private .my-summary__photo-private-layer {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .my-summary__list {
+        padding: 0.2rem 0;
+      }
+
+      .my-summary__list-item {
+        padding: 0.4rem 0;
+      }
+
+      .my-summary__icon {
+        color: var(--font-color, darkgrey);
+        width: 18px;
+        text-align: right;
+      }
+
+      .my-summary__link {
+        padding-left: 0.2rem;
+      }
+
+      .my-summary__icon::before {
+        width: 18px;
+      }
+
+      .resume {
+        background-color: var(--resume-bg-color, white);
+      }
+
+      .resume__title {
+        font-size: 2.38rem; /* 38px */
+        font-weight: 600;
+      }
+
+      .resume__subtitle {
+        font-size: 1.38rem; /* 22px */
+        color: var(--font-color, darkgrey);
+        text-align: right;
+      }
+
+      .resume__title--2 {
+        font-size: 1.88rem; /* 30px */
+        font-weight: 400;
+      }
+
+      .resume__title--3 {
+        font-size: 1.38rem; /* 22px */
+        font-weight: 200;
+      }
+
+      .resume__title--4 {
+        font-size: 1.25rem; /* 22px */
+        font-weight: 200;
+        line-height: 1rem;
+        color: var(--font-color, darkgrey);
+      }
+
+      .resume__title--5 {
+        font-size: 1rem; /* 16px */
+        font-style: italic;
+        padding-left: 3rem;
+      }
+
+      .resume__icon {
+        color: var(--font-color, darkgrey);
+        /* width: 18px; */
+        text-align: right;
+      }
+
+      .resume__link {
+        padding-left: 0.2rem;
+      }
+
+      .resume__icon::before {
+        /* width: 18px; */
+      }
+
+      .resume__article-titles {
+        position: relative;
+        padding: 0.5rem 0;
+        /* border-bottom: solid var(--border-width, 0.2rem) var(--font-color, darkgrey); */
+      }
+
+      .resume__article-titles::after {
+        content: "";
+        position: absolute;
+        background: var(--font-color, darkgrey);
+        height: var(--border-width, 0.2rem);
+        left: 0;
+        right: 4rem;
+        bottom: 0;
+      }
+
+      .resume__article-paragraph {
+        padding: 0.5rem 0;
+      }
+
+      .resume__article-figure {
+        min-width: 90px;
+      }
+
+      .cv-block {
+        position: relative;
+        padding-left: 1.5rem;
+      }
+
+      .cv-block::after {
+        content: "";
+        position: absolute;
+        background: var(--font-color, darkgrey);
+        width: var(--border-width, 0.2rem);
+        left: 0;
+        top: 1.5rem;
+        bottom: 1.5rem;
+      }
+    }
+
+    @media screen {
+      .main-container {
+        margin: 0 auto;
+        position: relative;
+        width: 1152px;
+        /* position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0; */
+      }
+
+      .sheet {
+        min-height: 100vh;
+      }
+    }
+
+    @media print {
+      .main-container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      .sheet {
+        min-height: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="template" class="main-container min-h-screen shadow-xl">
+    <div class="sheet flex items-stretch">
+      <aside class="my-summary w-1/4 p-2.5 bg-gray-200">
+        <div class="flex flex-col">
+          <figure class="my-summary__photo--private mx-auto my-4 rounded-full border-solid border-4 shadow-xl overflow-hidden">
+            <div v-if="private()" class="my-summary__photo-private-layer">
+              <a class="my-summary__link text-red-600" href="https://drive.google.com/file/d/1UMJSJMcCUeLnE2-7mV2gALWtvOIydG-7/view?usp=sharing" target="_blank"><b>Ver foto</b></a>
+            </div>
+            <img src="{{resume.personal.image}}" class="blur" :class="{ filter: private() }" alt="Foto" />
+          </figure>
+          <p class="my-summary__paragraph">
+            {{resume.personal.introduction}}
+          </p>
+          <p>
+            <strong>Actualmente formándome sobre el ERP Odoo.</strong>
+          </p>
+          <h1 class="my-summary__title">
+            Contacto
+          </h1>
+          <h1 class="my-summary__title">
+            {{ message }}
+          </h1>
+          <ul class="my-summary__list">
+            <li v-if="private()" class="my-summary__list-item">
+              <i class="my-summary__icon far fa-envelope shadow-xl"></i>
+              <a class="my-summary__link text-red-600" href="https://drive.google.com/file/d/1UMJSJMcCUeLnE2-7mV2gALWtvOIydG-7/view?usp=sharing" target="_blank"><b>Ver email</b></a>
+            </li>
+            <li v-if="!private()" class="my-summary__list-item">
+              <i class="my-summary__icon far fa-envelope shadow-xl"></i>
+              <a class="my-summary__link" href="mailto:{{resume.personal.email}}" target="_blank">{{ resume.personal.email }}</a>
+            </li>
+            <li v-if="private()" class="my-summary__list-item">
+              <i class="my-summary__icon fab fa-linkedin-in shadow-xl"></i>
+              <a class="my-summary__link text-red-600" href="https://drive.google.com/file/d/1UMJSJMcCUeLnE2-7mV2gALWtvOIydG-7/view?usp=sharing" target="_blank"><b>Ver linkedin</b></a>
+            </li>
+            <li v-if="!private()" class="my-summary__list-item">
+              <i class="my-summary__icon fab fa-linkedin-in shadow-xl"></i>
+              <a class="my-summary__link" href="https://linkedin.com/in/nlunaor0531" target="_blank">nlunaor0531</a>
+            </li>
+            <li v-if="private()" class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-mobile-alt shadow-xl"></i>
+              <a class="my-summary__link text-red-600" href="https://drive.google.com/file/d/1UMJSJMcCUeLnE2-7mV2gALWtvOIydG-7/view?usp=sharing" target="_blank"><b>Ver número</b></a>
+            </li>
+            <li v-if="!private()" class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-mobile-alt shadow-xl"></i>
+              <a class="my-summary__link" href="tel:+34 {{ resume.personal.telephone }}" target="_blank"><b>{{ resume.personal.telephone }}</b></a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-map-marker-alt shadow-xl"></i> {{ resume.personal.address }}
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-car shadow-xl"></i> Permiso de conducir B
+            </li>
+          </ul>
+          <h1 class="my-summary__title">
+            Aptitudes
+          </h1>
+          <ul class="my-summary__list">
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-user-cog shadow-xl"></i>
+              <a class="my-summary__link">Contaplus</a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-user-cog shadow-xl"></i>
+              <a class="my-summary__link">Contpaq</a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-user-cog shadow-xl"></i>
+              <a class="my-summary__link">SOs: Mac OS y Windows.</a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-user-cog shadow-xl"></i>
+              <a class="my-summary__link">Paquete office: Word y Excel.</a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-user-cog shadow-xl"></i>
+              <a class="my-summary__link">Edición de video iMovie.</a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-user-cog shadow-xl"></i>
+              <a class="my-summary__link">HTML, CSS.</a>
+            </li>
+          </ul>
+          <h1 class="my-summary__title">
+            Actitudes
+          </h1>
+          <ul class="my-summary__list">
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-star shadow-xl"></i>
+              <a class="my-summary__link">Responsable.</a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-star shadow-xl"></i>
+              <a class="my-summary__link">Adaptable.</a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-star shadow-xl"></i>
+              <a class="my-summary__link">Trabajo en Equipo.</a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-star shadow-xl"></i>
+              <a class="my-summary__link">Compañerismo.</a>
+            </li>
+            <li class="my-summary__list-item">
+              <i class="my-summary__icon fas fa-star shadow-xl"></i>
+              <a class="my-summary__link">Proactiva.</a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <section class="resume w-3/4 p-2.5">
+        <hgroup class="mb-6">
+          <h1 v-if="private()" class="resume__title">
+            <a class="my-summary__link text-red-600" href="https://drive.google.com/file/d/1UMJSJMcCUeLnE2-7mV2gALWtvOIydG-7/view?usp=sharing" target="_blank"><b>Ver nombre</b></a>
+          </h1>
+          <h1 v-if="!private()" class="resume__title">
+            {{resume.personal.name}} {{resume.personal.surname}}
+          </h1>
+          <h2 class="resume__subtitle">
+            Técnico superior en administración y finanzas
+          </h2>
+        </hgroup>
+        <div>
+          <h2 class="resume__title--2">
+            <i class="resume__icon fas fa-briefcase shadow-xl"></i> Experiencia
+          </h2>
+          <div class="cv-block ml-3">
+            {% for experience in resume.experience %}
+            {% set company = experience.company | split('|') %}
+            <article class="resume__article mb-2">
+              <div class="flex space-x-6">
+                {% if company[1] %}
+                <figure class="resume__article-figure flex items-center content-center filter grayscale">
+                  <img src="{{ company[1] }}" width="90">
+                </figure>
+                {% endif %}
+                <hgroup class="resume__article-titles flex-grow">
+                  <h3 class="resume__title--3">{{ experience.title }}</h3>
+                  <h4 class="resume__title--4">{{ company[0] }}</h4>
+                  <h5 class="resume__title--5">{{ experience.startDate | date("M. Y") }} - {{ experience.endDate | date("M. Y") }}</h5>
+                </hgroup>
+              </div>
+              <p class="resume__article-paragraph">{{ experience.description }}</p>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="mt-2">
+          <h2 class="resume__title--2">
+            <i class="resume__icon fas fa-user-graduate shadow-xl"></i> Formación académica
+          </h2>
+          <div class="cv-block ml-3">
+            {% for education in resume.education %}
+            {% set institution = education.institution | split('|') %}
+            <article class="resume__article mb-2">
+              <div class="flex space-x-6">
+                {% if institution[1] %}
+                <figure class="resume__article-figure flex items-center content-center filter grayscale">
+                  <img src="{{ institution[1] }}" width="90">
+                </figure>
+                {% endif %}
+                <hgroup class="resume__article-titles flex-grow">
+                  <h3 class="resume__title--3">{{ education.title }}</h3>
+                  <h4 class="resume__title--4">{{ institution[0] }}</h4>
+                  <h5 class="resume__title--5">{{ education.startDate | date("Y") }} - {{ education.endDate | date("Y") }}</h5>
+                </hgroup>
+              </div>
+              <p class="resume__article-paragraph">{{ education.description }}</p>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="mt-2">
+          <h2 class="resume__title--2">
+            <i class="resume__icon fas fa-user-graduate shadow-xl"></i> Formación complementaria
+          </h2>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script>
+    const Template = {
+      delimiters: ['${', '}'],
+      data() {
+        return {
+          message: 'You loaded this page on ' + new Date().toLocaleString()
+        }
+      },
+      methods: {
+        private() {
+          const urlSearchParams = new URLSearchParams(window.location.search);
+          const params = Object.fromEntries(urlSearchParams.entries());
+          const private = params?.show == 'true' ? true : false;
+          return !private;
+        }
+      }
+    }
+
+    Vue.createApp(Template).mount('#template')
+  </script>
+</body>
+</html>
