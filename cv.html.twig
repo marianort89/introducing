@@ -387,7 +387,9 @@
           </h2>
           <div class="cv-block ml-3">
             {% for education in resume.education %}
+            {% set title = education.title | split('|') %}
             {% set institution = education.institution | split('|') %}
+            {% if title[0] == 'T' %}
             <article class="resume__article mb-2">
               <div class="flex space-x-6">
                 {% if institution[1] %}
@@ -396,20 +398,44 @@
                 </figure>
                 {% endif %}
                 <hgroup class="resume__article-titles flex-grow">
-                  <h3 class="resume__title--3">{{ education.title }}</h3>
+                  <h3 class="resume__title--3">{{ title[1] }}</h3>
                   <h4 class="resume__title--4">{{ institution[0] }}</h4>
                   <h5 class="resume__title--5">{{ education.startDate | date("Y") }} - {{ education.endDate | date("Y") }}</h5>
                 </hgroup>
               </div>
               <p class="resume__article-paragraph">{{ education.description }}</p>
             </article>
+            {% endif %}
             {% endfor %}
           </div>
         </div>
-        <div class="mt-2">
+        <div class="mt-16">
           <h2 class="resume__title--2">
-            <i class="resume__icon fas fa-user-graduate shadow-xl"></i> Formación complementaria
+            <i class="resume__icon fas fa-plus shadow-xl"></i> Formación complementaria
           </h2>
+          <div class="cv-block ml-3">
+            {% for education in resume.education %}
+            {% set title = education.title | split('|') %}
+            {% set institution = education.institution | split('|') %}
+            {% if title[0] == 'C' %}
+            <article class="resume__article mb-2">
+              <div class="flex space-x-6">
+                {% if institution[1] %}
+                <figure class="resume__article-figure flex items-center content-center filter grayscale">
+                  <img src="{{ institution[1] }}" width="90">
+                </figure>
+                {% endif %}
+                <hgroup class="resume__article-titles flex-grow">
+                  <h3 class="resume__title--3">{{ title[1] }}</h3>
+                  <h4 class="resume__title--4">{{ institution[0] }}</h4>
+                  <h5 class="resume__title--5">{{ education.startDate | date("M. Y") }} - {{ education.endDate | date("M. Y") }}</h5>
+                </hgroup>
+              </div>
+              <p class="resume__article-paragraph">{{ education.description }}</p>
+            </article>
+            {% endif %}
+            {% endfor %}
+          </div>
         </div>
       </section>
     </div>
