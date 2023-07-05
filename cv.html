@@ -253,9 +253,6 @@
           <h1 class="my-summary__title">
             Contacto
           </h1>
-          <h1 class="my-summary__title">
-            {{ message }}
-          </h1>
           <ul class="my-summary__list">
             <li v-if="private()" class="my-summary__list-item">
               <i class="my-summary__icon far fa-envelope shadow-xl"></i>
@@ -346,11 +343,11 @@
       </aside>
       <section class="resume w-3/4 p-2.5">
         <hgroup class="mb-6">
-          <h1 v-if="private()" class="resume__title">
+          <!-- <h1 v-if="private()" class="resume__title">
             <a class="my-summary__link text-red-600" href="https://drive.google.com/file/d/1UMJSJMcCUeLnE2-7mV2gALWtvOIydG-7/view?usp=sharing" target="_blank"><b>Ver nombre</b></a>
-          </h1>
-          <h1 v-if="!private()" class="resume__title">
-            {{resume.personal.name}} {{resume.personal.surname}}
+          </h1> -->
+          <h1 class="resume__title">
+            María Naiely Luna Ortiz
           </h1>
           <h2 class="resume__subtitle">
             Técnico superior en administración y finanzas
